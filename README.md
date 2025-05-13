@@ -16,8 +16,8 @@ _Pronto..._
 
 ## 🛠️ Tecnologías utilizadas
 
-- **Frontend:** Jetpack Compose (Kotlin)
-- **Backend:** (Opcional, puede ser Firebase, Supabase, etc.)
+- **Frontend:** HTML, CSS, JS 
+- **Backend:** Express JS, MySQL
 - **Gestión de estado:** (Ej. ViewModel + StateFlow)
 - **Persistencia local:** Room / DataStore
 
