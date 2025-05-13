@@ -1,5 +1,4 @@
-# FlechaApp
-# ✅ TaskNest
+# ✅ FlechaApp
 
 **FlechaApp** es una aplicación de gestión de tareas sencilla, rápida y centrada en la productividad. Permite crear, editar, eliminar y organizar tareas por prioridades, fechas de vencimiento y proyectos o categorías.
 
