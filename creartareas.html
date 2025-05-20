@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crear Tareas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Igual que antes, estilos resumidos */
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-image: url('../Imagenes/background-image.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            color: #EFE6BC;
+        }
+        .app-container { height: 100vh; display: flex; flex-direction: column; }
+        .logo-header { height: 100px; display: flex; justify-content: center; align-items: center; background-color:#EFE6BC}
+        .logo-header img { max-height: 80px; max-width: 300px; }
+        .form-column { flex: 1; padding: 40px; overflow-y: auto; color: #EFE6BC; max-width: 600px; margin: auto; }
+        .form-column h3 { margin-bottom: 30px; border-bottom: 2px solid #edcd3d; padding-bottom: 8px; }
+        label { font-weight: 600; margin-top: 15px; }
+        input, select { background-color: #fff; border: 1px solid #ccc; border-radius: 5px; padding: 10px; font-size: 1rem; width: 100%; color: #000; margin-top: 5px; }
+        input:focus, select:focus { border-color: #EFE6BC; outline: none; box-shadow: 0 0 8px rgba(62,44,28,0.3); }
+        button { margin-top: 30px; background-color: #EFE6BC; color: #3e2c1c; border: none; padding: 12px 20px; font-size: 1.1rem; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background-color 0.4s ease; }
+        button:hover { background-color: #7a634e; color: #fff; }
+        a { color: #edcd3d; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 20px; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="logo-header">
+            <img src="/Imagenes/IconoConSlogan.png" alt="Logo" />
+        </header>
+
+        <section class="form-column">
+            <h3>Crear nueva tarea</h3>
+            <form id="taskForm">
+                <label for="taskName">Nombre de la tarea</label>
+                <input type="text" id="taskName" name="taskName" required minlength="3" placeholder="Ej: Terminar informe" />
+
+                <label for="taskStatus">Estado</label>
+                <select id="taskStatus" name="taskStatus" required>
+                    <option value="no-completada">No completada</option>
+                    <option value="completada">Completada</option>
+                </select>
+
+                <label for="taskPriority">Prioridad (1 - baja, 3 - alta)</label>
+                <select id="taskPriority" name="taskPriority" required>
+                    <option value="1">1 (Baja)</option>
+                    <option value="2">2 (Media)</option>
+                    <option value="3">3 (Alta)</option>
+                </select>
+
+                <label for="taskDueDate">Fecha de vencimiento</label>
+                <input type="date" id="taskDueDate" name="taskDueDate" required min="" />
+
+                <button type="submit">Agregar tarea</button>
+            </form>
+
+            <a href="../vertareas.html">Ver todas las tareas</a>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
+
+        const taskForm = document.getElementById('taskForm');
+
+        taskForm.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const name = taskForm.taskName.value.trim();
+            const status = taskForm.taskStatus.value;
+            const priority = taskForm.taskPriority.value;
+            const dueDate = taskForm.taskDueDate.value;
+
+            if(name && status && priority && dueDate){
+                // Leer tareas previas
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+                // Agregar nueva tarea
+                tasks.push({ name, status, priority, dueDate });
+
+                // Guardar en localStorage
+                localStorage.setItem('tasks', JSON.stringify(tasks));
+
+                alert('Tarea agregada correctamente');
+
+                taskForm.reset();
+                taskForm.taskDueDate.min = new Date().toISOString().split('T')[0];
+            }
+        });
+    </script>
+</body>
+</html>
