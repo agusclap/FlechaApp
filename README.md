@@ -21,8 +21,6 @@ _Pronto..._
 - **Gestión de estado:** (Ej. ViewModel + StateFlow)
 - **Persistencia local:** Room / DataStore
 
-> ⚠️ Si estás usando otras tecnologías, podés actualizar esta sección.
-
 ## 🔧 Instalación y uso
 
 1. Cloná el repositorio:
