@@ -1,0 +1,76 @@
+/* Fondo con la imagen */
+html, body {
+    height: 100%;
+    margin: 0;
+     background-image: url('../Imagenes/background-image.png'); /* Asegúrate de que la ruta de la imagen sea correcta */
+    background-size: cover;  /* Esto asegura que la imagen cubra toda la página */
+    background-position: center; /* Centra la imagen en la pantalla */
+    background-attachment: fixed; /* Hace que la imagen se mantenga fija al hacer scroll */
+    overflow: hidden;
+}
+
+/* Personalización del formulario */
+h2 {
+    text-align: center;
+    color: #EFE6BC; /* Color oscuro para el texto */
+    font-family: 'Arial', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Inputs */
+input {
+    background-color: #fff; /* Blanco para los campos */
+    border: 1px solid #ccc; /* Borde sutil */
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+    font-size: 1rem;
+    margin-bottom: 20px; /* Espaciado entre campos */
+}
+
+input:focus {
+    border-color: #EFE6BC; /* Cambio de borde al hacer foco */
+    outline: none;
+    box-shadow: 0 0 8px rgba(62, 44, 28, 0.3); /* Sombra suave */
+}
+
+/* Botón de login */
+.btn-login{
+    background-color: #EFE6BC; /* Color marrón para el botón */
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.8s ease; /* Efecto de transición */
+    margin-top: 5%;
+}
+
+button:hover {
+    background-color: #7a634e; /* Tonalidad más clara al pasar el ratón */
+}
+
+/* Logo centrado y tamaño ajustado */
+
+.logo-login {
+    margin-top: 10%;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra verticalmente */
+    height: 100px; /* Ajusta la altura del contenedor si es necesario */
+}
+
+.forgotpassword-login{
+    margin-top: -6%;
+    margin-left: 50%;
+    color: #EFE6BC;
+}
+
+.register-login{
+    margin-top: 3%;
+    margin-left: 20%;
+    color: #edcd3d;
+}
