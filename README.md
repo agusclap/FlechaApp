@@ -25,5 +25,4 @@ _Pronto..._
 
 1. Cloná el repositorio:
    ```bash
-   git clone https://github.com/tuusuario/tasknest.git
-   cd tasknest
+   git clone https://github.com/agusclap/FlechaApp.git
