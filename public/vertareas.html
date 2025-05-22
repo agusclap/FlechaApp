@@ -9,7 +9,7 @@
         html, body {
             height: 100%;
             margin: 0;
-            background-image: url('../Imagenes/background-image.png');
+            background-image: url('../img/background-image.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -84,7 +84,7 @@
 <body>
     <div class="app-container">
         <header class="logo-header">
-            <img src="/Imagenes/IconoConSlogan.png" alt="Logo" />
+            <img src="/img/IconoConSlogan.png" alt="Logo" />
         </header>
 
         <main>
@@ -94,37 +94,9 @@
         </main>
     </div>
 
-    <script>
-        const tasksList = document.getElementById('tasksList');
-
-        function renderTasks() {
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-
-            if(tasks.length === 0){
-                tasksList.innerHTML = '<p style="color:#edcd3d;">No hay tareas guardadas.</p>';
-                return;
-            }
-
-            tasksList.innerHTML = '';
-
-            tasks.forEach(task => {
-                const card = document.createElement('div');
-                card.className = 'task-card';
-
-                card.innerHTML = `
-                    <div class="task-name">${task.name}</div>
-                    <div class="task-info">
-                        <span>Estado: <span class="${task.status === 'completada' ? 'completed' : 'not-completed'}">${task.status === 'completada' ? 'Completada' : 'No completada'}</span></span>
-                        <span>Prioridad: ${task.priority}</span>
-                        <span>Vence: ${task.dueDate}</span>
-                    </div>
-                `;
-
-                tasksList.appendChild(card);
-            });
-        }
-
-        renderTasks();
-    </script>
+        <script src="/script/script.js"></script>
+<script>
+    mostrarTareas();
+</script>
 </body>
 </html>

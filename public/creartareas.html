@@ -9,7 +9,7 @@
         html, body {
             height: 100%;
             margin: 0;
-            background-image: url('../Imagenes/background-image.png');
+            background-image: url('../img/background-image.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -70,7 +70,7 @@
     <body>
         <div class="app-container">
             <header class="logo-header">
-                <img src="/Imagenes/IconoConSlogan.png" alt="Logo" />
+                <img src="/img/IconoConSlogan.png" alt="Logo" />
             </header>
     
             <section class="form-column">
@@ -99,39 +99,15 @@
             </section>
         </div>
     
+       <script src="/script/script.js"></script>
         <script>
-            const taskForm = document.getElementById('taskForm');
-            document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
-    
-            taskForm.addEventListener('submit', e => {
-                e.preventDefault();
-    
-                const name = taskForm.taskName.value.trim();
-                const description = taskForm.taskDescription.value.trim();
-                const priority = taskForm.taskPriority.value;
-                const dueDate = taskForm.taskDueDate.value;
-    
-                if (name && priority) {
-                    const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    
-                    const newTask = {
-                        name,
-                        description,
-                        priority,
-                        status: "no-completada",
-                        dueDate: dueDate || null
-                    };
-    
-                    tasks.push(newTask);
-                    localStorage.setItem('tasks', JSON.stringify(tasks));
-    
-                    alert('✅ Tarea agregada correctamente');
-    
-                    taskForm.reset();
-                    taskForm.taskDueDate.min = new Date().toISOString().split('T')[0];
-                }
-            });
+        document.getElementById('taskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            createTask(); // Llama a la función JS que envía la tarea al servidor
+        });
+        document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
         </script>
+    </body>
     </body>
     
 </html>

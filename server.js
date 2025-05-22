@@ -26,7 +26,7 @@ app.listen(PORT, () => {
 //Configuracion de la base de datos
 
 let db; // Esta variable contendrá la conexión global a la base de datos "tikitaka"
-
+let userLoggedIn ; // Esta variable contendrá el id del usuario logueado
 //Crear conexión sin base de datos para poder crearla
 
 const tempDb = mysql.createConnection({
@@ -88,7 +88,7 @@ app.get('/', (req, res) => {
 });
 
 const bcrypt = require('bcrypt'); //libreria para encriptar contraseñas
-let userId;
+
 //Ruta para el login de usuarios
 app.post('/login', (req, res) => {
     const {email, password} = req.body;
@@ -100,7 +100,9 @@ app.post('/login', (req, res) => {
             const user = result[0];
             const match = await bcrypt.compare(password, user.password);
             if (match) {
-                userLoggedIn = result[0].id 
+                userLoggedIn = result[0].user_id 
+
+                console.log(userLoggedIn);
                 res.send({success: true, message: 'Login exitoso'});
             } else {
                 res.send({success: false, message: 'Usuario o contraseña incorrectos'});
@@ -145,21 +147,62 @@ app.post('/register', async (req, res) => {
 });
 //Ruta para crear tareas
 app.post('/tareas', (req, res) => {
-    const {fecha_inicio, fecha_fin, nombre, descripcion } = req.body;
+    const createTableQuery = `
+          CREATE TABLE IF NOT EXISTS task (
+            task_id INT AUTO_INCREMENT PRIMARY KEY,
+            user_id INT NOT NULL,
+            start_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            final_date DATETIME DEFAULT NULL,
+            name VARCHAR(255) NOT NULL,
+            description TEXT NOT NULL,
+            priority INT NOT NULL,
+            FOREIGN KEY (user_id) REFERENCES usuarios(user_id)
+          )
+        `;
+        db.query(createTableQuery, (err, res) => {
+          if (err) throw err;
+          console.log('✅ Tabla Tareas creada o ya existía');
+        });
+    
 
-    //verificar si la tarea ya existe
+    if (!userLoggedIn) {
+        return res.status(400).json({ success: false, message: 'Usuario no autenticado' });
+    }
 
-    const sql = 'SELECT * FROM tareas WHERE nombre = ?';
-    db.query(sql, [nombre], (err, result) => {
-        if (err) return res.status(500).send('Error en la conexion');
-        if(result.length > 0) {
-            return res.send({success: false, message: 'La tarea ya existe'});
-        }else{
-          const sqlInsert = 'INSERT INTO tareas (fecha_inicio, fecha_fin, nombre, descripcion) VALUES (?, ?, ?, ?)';
-          db.query(sqlInsert, [fecha_inicio, fecha_fin, nombre, descripcion], (err, result) => {
-          if (err) return res.status(500).send('Error en la carga de los datos');
-          res.send({success: true, message: 'Tarea creada exitosamente'});
-          });
+    const { name, description, priority, fecha_fin, fecha_inicio} = req.body;
+    
+    console.log(req.body);
+
+    console.log(name, description, priority, fecha_fin, fecha_inicio);
+
+    // Validar datos
+    if (!name || !description || !priority ) {
+        return res.status(400).json({ success: false, message: 'Faltan datos de la tarea' });
+    }
+
+
+
+    // Insertar tarea
+    const sql = 'INSERT INTO task (user_id, start_date, final_date, name, description, priority) VALUES (?, ?, ?, ?, ?, ?)';
+    db.query(sql, [userLoggedIn, fecha_inicio, fecha_fin, name, description, priority], (err, result) => {
+        if (err) {
+            console.error('Error al insertar tarea:', err);
+            return res.status(500).json({ success: false, message: 'Error en la conexion' });
         }
+        res.json({success: true, message: 'Tarea creada'});
+    });
+});
+
+app.get('/vertareas', (req, res) => {
+    if (!userLoggedIn) {
+        return res.status(400).json({ success: false, message: 'Usuario no autenticado' });
+    }
+    db.query('SELECT * FROM task WHERE user_id = ?', [userLoggedIn], (err, results) => {
+        if (err) {
+            console.log(results);
+            console.error('Error al obtener tareas:', err);
+            return res.status(500).json({ success: false, message: 'Error al obtener tareas' });
+        }
+        res.json({ success: true, tareas: results });
     });
 });

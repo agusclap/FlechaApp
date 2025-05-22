@@ -14,7 +14,7 @@
 </style>
 <body>
     <div class="logo-login d-flex justify-content-center" style="margin-top: 5%;">
-        <img src="/Imagenes/IconoConSlogan.png" alt="Logo" style="max-width: 400px;">
+        <img src="/img/IconoConSlogan.png" alt="Logo" style="max-width: 200px;">
     </div>
 
     <div class="container d-flex align-items-center justify-content-center" style="margin-top: 5%;">
@@ -36,6 +36,12 @@
                         <button class="btn-login" type="submit">Login</button>
                     </div>
 
+                    <div role="alert" id="message" style="display:none;">
+        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:" style="display: none;">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+    </div>
+
                     <!-- Enlace debajo del botón -->
                     <p class="register-login">Dont have an account?
                         <a href="register.html" style="color: #edcd3d;">Sign Up</a>
@@ -45,11 +51,7 @@
         </div>
     </div>
 
-    <div role="alert" id="message" style="display:none;">
-        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:" style="display: none;">
-            <use xlink:href="#exclamation-triangle-fill" />
-        </svg>
-    </div>
+    
 
     <script src="/script/script.js"></script>
     <script>
