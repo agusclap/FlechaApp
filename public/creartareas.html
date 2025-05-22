@@ -1,113 +1,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Crear Tareas</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <style>
-        html, body {
-            height: 100%;
-            margin: 0;
-            background-image: url('../img/background-image.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            color: #EFE6BC;
-        }
-        .app-container { height: 100vh; display: flex; flex-direction: column; }
-        .logo-header { height: 100px; display: flex; justify-content: center; align-items: center; background-color:#EFE6BC}
-        .logo-header img { max-height: 80px; max-width: 300px; }
-        .form-column { flex: 1; padding: 40px; overflow-y: auto; color: #EFE6BC; max-width: 600px; margin: auto; }
-        .form-column h3 { margin-bottom: 30px; border-bottom: 2px solid #edcd3d; padding-bottom: 8px; }
-        label { font-weight: 600; margin-top: 15px; }
-        input, textarea, select {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 1rem;
-            width: 100%;
-            color: #000;
-            margin-top: 5px;
-        }
-        input:focus, textarea:focus, select:focus {
-            border-color: #EFE6BC;
-            outline: none;
-            box-shadow: 0 0 8px rgba(62,44,28,0.3);
-        }
-        button {
-            margin-top: 30px;
-            background-color: #EFE6BC;
-            color: #3e2c1c;
-            border: none;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.4s ease;
-        }
-        button:hover {
-            background-color: #7a634e;
-            color: #fff;
-        }
-        a {
-            color: #edcd3d;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 20px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crear Tarea</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+    background-color: #EFE6BC !important;
+    }
+    .bg-custom-dark {
+      background-color: #3e2c1c;
+      color: #EFE6BC;
+    }
+    .bg-custom-dark .form-control,
+    .bg-custom-dark .form-select {
+      background-color: #5a3f2a;
+      color: #EFE6BC;
+      border: 1px solid #a38665;
+    }
+    .bg-custom-dark .form-control::placeholder {
+      color: #d8c8a0;
+    }
+    .bg-custom-dark .form-label {
+      color: #f7eac6;
+    }
+    .bg-custom-dark .link-warning {
+      color: #f7cb6b;
+    }
+  </style>
 </head>
-<!-- ... mismo <head> y estilos que antes ... -->
-    <body>
-        <div class="app-container">
-            <header class="logo-header">
-                <img src="/img/IconoConSlogan.png" alt="Logo" />
-            </header>
-    
-            <section class="form-column">
-                <h3>Crear nueva tarea</h3>
-                <form id="taskForm">
-                    <label for="taskName">Título de la tarea</label>
-                    <input type="text" id="taskName" name="taskName" required minlength="3" placeholder="Ej: Terminar informe" />
-    
-                    <label for="taskDescription">Descripción</label>
-                    <textarea id="taskDescription" name="taskDescription" rows="4" placeholder="Ej: Incluir gráficos, conclusiones, etc."></textarea>
-    
-                    <label for="taskPriority">Prioridad (1 - baja, 3 - alta)</label>
-                    <select id="taskPriority" name="taskPriority" required>
-                        <option value="1">1 (Baja)</option>
-                        <option value="2">2 (Media)</option>
-                        <option value="3">3 (Alta)</option>
-                    </select>
-    
-                    <label for="taskDueDate">Fecha de vencimiento (opcional)</label>
-                    <input type="date" id="taskDueDate" name="taskDueDate" />
-    
-                    <button type="submit">Agregar tarea</button>
-                </form>
-    
-                <a href="vertareas.html">Ver todas las tareas</a>
-            </section>
+<body>
+
+    <header style="background-color: #EFE6BC;" class="py-4 text-center">
+        <img src="./img/IconoConSlogan.png" alt="Logo" class="img-fluid" style="max-height: 80px;" />
+    </header>
+
+
+  <main class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card shadow bg-custom-dark">
+          <div class="card-body">
+            <h3 class="card-title mb-4 border-bottom pb-2">Crear nueva tarea</h3>
+
+            <form id="taskForm">
+              <div class="mb-3">
+                <label for="taskName" class="form-label">Título de la tarea</label>
+                <input type="text" class="form-control" id="taskName" name="taskName" required minlength="3" placeholder="Ej: Terminar informe" />
+              </div>
+
+              <div class="mb-3">
+                <label for="taskDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="taskDescription" name="taskDescription" rows="4" placeholder="Ej: Incluir gráficos, conclusiones, etc."></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="taskPriority" class="form-label">Prioridad</label>
+                <select class="form-select" id="taskPriority" name="taskPriority" required>
+                  <option value="1">1 (Baja)</option>
+                  <option value="2">2 (Media)</option>
+                  <option value="3">3 (Alta)</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label for="taskDueDate" class="form-label">Fecha de vencimiento</label>
+                <input type="date" class="form-control" id="taskDueDate" name="taskDueDate" />
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-warning">Agregar tarea</button>
+              </div>
+            </form>
+
+            <div class="mt-4 text-center">
+              <a href="vertareas.html" class="link-warning fw-semibold">Ver todas las tareas</a>
+            </div>
+
+          </div>
         </div>
-    
-       <script src="/script/script.js"></script>
-        <script>
-        document.getElementById('taskForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            createTask(); // Llama a la función JS que envía la tarea al servidor
-        });
-        document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
-        </script>
-    </body>
-    </body>
-    
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('taskForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      createTask(); // Función JS que guardaría la tarea
+    });
+
+    document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
+  </script>
+
+  <script src="/script/script.js"></script>
+</body>
 </html>
