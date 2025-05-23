@@ -3,6 +3,8 @@ const express = require('express'); //framework para crear el servidor
 const mysql = require('mysql'); //libreria para conectarse a la base de datos
 const bodyParser = require('body-parser'); //libreria para parsear el body de las peticiones
 const cors = require('cors'); //libreria para permitir peticiones de otros dominios
+const jwt = require('jsonwebtoken'); //libreria para crear tokens
+const SECRET_KEY = 'mi_clave'; //clave secreta para firmar los tokens
 
 /*Parsear significa analizar o descomponer una estructura de datos o texto según ciertas reglas para entender su contenido y trabajar con él */
 
@@ -101,8 +103,10 @@ app.post('/login', (req, res) => {
             const match = await bcrypt.compare(password, user.password);
             if (match) {
                 userLoggedIn = result[0].user_id 
-
-                console.log(userLoggedIn);
+                const token = jwt.sign(
+                { user_id: userLoggedIn, email: user.email },
+                SECRET_KEY,
+                { expiresIn: '2h' });
                 res.send({success: true, message: 'Login exitoso'});
             } else {
                 res.send({success: false, message: 'Usuario o contraseña incorrectos'});
@@ -147,7 +151,8 @@ app.post('/register', async (req, res) => {
     });
 });
 //Ruta para crear tareas
-app.post('/tareas', (req, res) => {
+app.post('/tareas', authenticateToken, (req, res) => {
+    const userId = req.user.user_id;
     const createTableQuery = `
           CREATE TABLE IF NOT EXISTS task (
             task_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -207,3 +212,15 @@ app.get('/vertareas', (req, res) => {
         res.json({ success: true, tareas: results });
     });
 });
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (!token) return res.status(401).json({ success: false, message: 'Token requerido' });
+
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.status(403).json({ success: false, message: 'Token inválido' });
+        req.user = user;
+        next();
+    });
+}

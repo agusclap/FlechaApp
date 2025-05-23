@@ -92,6 +92,10 @@
     });
 
     document.getElementById('taskDueDate').min = new Date().toISOString().split('T')[0];
+    const token = localStorage.getItem('token');
+    if (!token) {
+    window.location.href = 'login.html';
+}
   </script>
 
   <script src="/script/script.js"></script>

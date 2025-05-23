@@ -59,6 +59,7 @@ async function login() {
     });
     const data = await res.json(); //Esperamos la respuesta del servidor
     if (data.success) {
+        localStorage.setItem('token', data.token);
         window.location.href = 'vertareas.html'; //Redirigimos a la pantalla 2
     } else {
         msgDiv.style.display = 'block'; //Mostramos el mensaje de error
@@ -79,11 +80,12 @@ async function createTask() {
         // Puedes usar la fecha actual como fecha_inicio
         const fecha_inicio = new Date().toISOString().split('T')[0];
         const fecha_fin = dueDate || null;
-
+        const token = localStorage.getItem('token');
         const res = await fetch('http://localhost:3000/tareas', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
             },
             body: JSON.stringify({
                 fecha_inicio,
@@ -129,6 +131,7 @@ async function mostrarTareas() {
                     <span>Estado: <span class="${task.status === 'completada' ? 'completed' : 'not-completed'}">${task.status === 'completada' ? 'Completada' : 'No completada'}</span></span>
                     <span>Prioridad: ${task.priority}</span>
                     <span>Vence: ${task.final_date ? task.final_date.split('T')[0] : ''}</span>
+                    <span><a >Eliminar</a>
                 </div>
             `;
 
@@ -137,6 +140,10 @@ async function mostrarTareas() {
     } catch (error) {
         tasksList.innerHTML = '<p style="color:#edcd3d;">Error al cargar tareas.</p>';
     }
+}
+function logout() {
+    localStorage.removeItem('token');
+    window.location.href = 'login.html';
 }
 
 
