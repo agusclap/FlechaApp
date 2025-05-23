@@ -84,7 +84,7 @@ tempDb.connect((err) => {
 //Rutas POST para procesar login y registro 
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/login.html');
+    res.sendFile(__dirname + '/public/splashscreen.html');
 });
 
 const bcrypt = require('bcrypt'); //libreria para encriptar contraseñas
@@ -122,7 +122,8 @@ app.post('/register', async (req, res) => {
     db.query(sql, [email], async (err, result) => {
         if (err) return res.status(500).send('Mail en uso');
         if(result.length > 0) {
-            if (err) return res.status(500).json({ success: false, message: 'error en la carga de los datos' });
+            // Cambiado: mensaje claro si el mail ya está en uso
+            return res.send({success: false, message: 'El correo electrónico ya está en uso'});
         } else {
             if(password.length < 8) {
                 return res.send({success: false, message: 'La contraseña debe tener al menos 8 caracteres'});
@@ -135,9 +136,9 @@ app.post('/register', async (req, res) => {
                     const hashedPassword = await bcrypt.hash(password, 10);
                     const sql = 'INSERT INTO usuarios (email, name, lastname, password) VALUES (?, ?, ?, ?)';
                     db.query(sql, [email, name, lastname, hashedPassword], (err, result) => {
-                    if (err) return res.status(500).json({ success: false, message: 'error en la carga de los datos' });
-                    res.send({success: true, message: 'Registro exitoso'});
-            });
+                        if (err) return res.status(500).json({ success: false, message: 'error en la carga de los datos' });
+                        res.send({success: true, message: 'Registro exitoso'});
+                    });
                 } catch (e) {
                     return res.status(500).json({ success: false, message: 'Error al encriptar la contraseña' });
                 }

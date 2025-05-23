@@ -13,7 +13,7 @@
   />
   <style>
     body {
-      background-image: url('/Imagenes/colorapp.png');
+      background-image: url('/img/colorapp.png');
       background-size: cover;
       background-repeat: no-repeat;
       background-position: center;
@@ -115,6 +115,12 @@
         </div>
 
         <button type="submit" class="btn-login">Register</button>
+        <br>
+        <div role="alert" id="message" style="display:none;">
+                        <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Warning:" style="display: none;">
+                        <use xlink:href="#exclamation-triangle-fill" />
+                        </svg>
+                    </div>
 
         <p class="register-login">
           Already have an account?
@@ -123,8 +129,7 @@
       </form>
 
       <!-- Alerta oculta -->
-      <div class="alert alert-warning mt-3 d-none" id="message" role="alert">
-        <!-- Mensaje dinámico aquí -->
+
       </div>
     </div>
   </div>
